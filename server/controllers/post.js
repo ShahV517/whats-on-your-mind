@@ -19,7 +19,6 @@ const createPost = async (req, res) => {
 const getPosts = async (req, res) => {
     try {
         const posts = await Post.find({ author: req.user._id })
-
         return res.send(posts);
     }
     catch (err) {
@@ -49,7 +48,12 @@ const updatePost = async (req, res) => {
     const { title, content } = req.body;
     if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).send('Invalid id');
     try {
-        const post = await Post.findOneAndUpdate({ _id: id }, { title, content }, { new: true });
+        const post = await Post.find({ _id: id });
+        if (!post) return res.status(404).send('Post not found');
+        if (post.author != req.user._id) return res.status(401).send('Unauthorized');
+        if (post.title) post.title = title;
+        if (post.content) post.content = content;
+        await post.save();
         return res.send(post);
     }
     catch (err) {

@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { hashPassword } = require ('./auth');
 
 const getUser = (req, res) => {
     User.findOne({ _id: req.params.id })
@@ -10,8 +11,12 @@ const getUser = (req, res) => {
 }
 
 // huge bug here: the user's password is not hashed
-const updateUser = (req, res) => {
-    User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true })
+const updateUser = async (req, res) => {
+    const data = req.body;
+    if (req.body.password) {
+        data.password = await hashPassword(req.body.password);
+    }
+    User.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
     .exec((err, user) => {
         if (err) return res.status(500).send(err);
         return res.send(user);

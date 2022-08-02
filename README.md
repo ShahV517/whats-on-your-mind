@@ -2,7 +2,9 @@
 
 Website where users can post an update on their day. 
 
-## Where the website is right now
+## First Update
+
+### Where the website is right now
 
 I have completed the development of the server, although there is room for improvement.
 
@@ -13,7 +15,26 @@ Current issues include:
 
 - User update leads to decrpytion of password.
 
-## Next steps:
+### Next steps:
 
 - Fix bugs
 - Implement the frontend portion of the project and connect it to the backend
+
+
+## Second Update
+
+### Where the website is right now
+
+I have essentially completed the development of the backend and implemented a large portion of the frontend. The previous server bugs have been fixed, and I made sure that the backend API securely communicates with the frontend such that the user sensitive information is safe from possible breach. The user, with authentication, can now post new blogs and view their current ones. I will be working on adding the Update and Delete functionality next, as well as ability to edit user information. As of now, the frontend is still very primitive and contains little stylistic design. I plan on fixing that by using Bootstrap and custom CSS. 
+
+Current issues include:
+
+- User cannot edit or delete their posts
+- Structure of the client-side files is awkward and messy
+- Website looks primitive and unappealing
+
+### Next steps:
+
+- Further development of frontend in terms of functionality and style
+- Test the website for possible bugs
+- Possibly incorporate a refresh token upon further research and understanding of how refresh tokens work

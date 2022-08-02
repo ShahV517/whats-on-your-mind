@@ -2,7 +2,7 @@ const User = require('../models/User');
 const { hashPassword } = require ('./auth');
 
 const getUser = (req, res) => {
-    User.findOne({ _id: req.params.id })
+    User.findOne({ _id: req.user._id })
     .populate('posts')
     .exec((err, user) => {
         if (err) return res.status(500).send(err);
@@ -19,7 +19,11 @@ const updateUser = async (req, res) => {
     User.findOneAndUpdate({ _id: req.params.id }, data, { new: true })
     .exec((err, user) => {
         if (err) return res.status(500).send(err);
-        return res.send(user);
+        return res.send({
+            name: user.name,
+            email: user.email,
+            posts: user.posts
+        });
     });
 }
 
@@ -28,7 +32,13 @@ const deleteUser = (req, res) => {
     User.findOneAndDelete({ _id: req.params.id })
     .exec((err, user) => {
         if (err) return res.status(500).send(err);
-        return res.send(user);
+        return res.send(
+            {
+                name: user.name,
+                email: user.email,
+                posts: user.posts
+            }
+        );
     });
 }
 
